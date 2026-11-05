@@ -215,6 +215,14 @@ html[lang="ar"] .page-hero::before { background: linear-gradient(270deg, rgba(11
 .page-hero .container { position: relative; }
 .page-hero h1 { color: #fff; font-size: clamp(34px, 5vw, 54px); margin: 10px 0 12px; }
 .page-hero p { color: #e1e7f7; font-size: 20px; max-width: 640px; }
+/* Banners given as variables on the section: a mirrored copy for Arabic (the dark side flips) and smaller copies for phones.
+   Paths start with ../ so they resolve the same from this file and from the page. */
+.page-hero[style*="--img"] { background-image: var(--img); }
+html[dir="rtl"] .page-hero[style*="--img"] { background-image: var(--img-rtl); }
+@media (max-width: 900px) {
+  .page-hero[style*="--img"] { background-image: var(--img-sm); }
+  html[dir="rtl"] .page-hero[style*="--img"] { background-image: var(--img-rtl-sm); }
+}
 .page-hero .eyebrow { color: var(--gold-2); margin: 14px 0 0; }
 .page-hero .hero-ctas { margin-top: 28px; }
 .crumbs { display: flex; flex-wrap: wrap; gap: 10px; font-size: 14px; color: var(--gold-2); }
@@ -222,8 +230,7 @@ html[lang="ar"] .page-hero::before { background: linear-gradient(270deg, rgba(11
 .crumbs a:hover { color: var(--cyan); }
 
 /* ---------- Stats (Home) ---------- */
-/* The band under the numbers is navy, so the hero runs straight into the military section with no white strip */
-.stats { position: relative; z-index: 5; margin-top: -70px; background: linear-gradient(transparent 70px, var(--navy) 70px); }
+.stats { position: relative; z-index: 5; margin-top: -70px; }
 /* The last number has the longest label, so its column is wider; every cell centres its content so no cell looks empty */
 .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1.55fr; background: #fff; border-radius: var(--radius); box-shadow: 0 20px 50px rgba(11,22,64,.14); overflow: hidden; }
 .stat { display: flex; flex-direction: column; justify-content: center; padding: 26px 24px; text-align: center; border-inline-end: 1px solid var(--line); }
@@ -232,6 +239,24 @@ html[lang="ar"] .page-hero::before { background: linear-gradient(270deg, rgba(11
 .stat .num span { color: var(--cyan); }
 .stat .num > span.en, .stat .num > span.ar { font-size: .5em; font-weight: 600; vertical-align: middle; }
 .stat .label { color: var(--muted); font-size: 15.5px; margin-top: 8px; }
+
+/* ---------- Welcome (Home): the centre's logo and stamps under the hero ----------
+   The stamps drop into place when they come into view, and pressing one stamps it again (main.js). */
+.welcome { text-align: center; }
+.welcome-title { font-size: clamp(26px, 4.4vw, 52px); line-height: 1.3; color: var(--red); margin-bottom: 48px; text-wrap: balance; }
+.welcome-title small { display: block; font-size: .56em; color: var(--navy); margin-bottom: 6px; }
+.stamps { display: grid; grid-template-columns: 1fr 1.25fr 1fr; align-items: center; gap: clamp(16px, 4vw, 56px); max-width: 1000px; margin-inline: auto; }
+.stamp { transform: rotate(var(--r, 0deg)); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.stamp img { width: 100%; height: auto; filter: drop-shadow(0 10px 18px rgba(11,22,64,.10)); }
+.stamps .stamp.reveal { opacity: 0; transform: rotate(var(--r, 0deg)) scale(1.35); transition: opacity .35s ease, transform .5s cubic-bezier(.34, 1.56, .64, 1); }
+.stamps .stamp.reveal.in { opacity: 1; transform: rotate(var(--r, 0deg)); }
+.stamps .stamp.reveal.in:hover { transform: rotate(var(--r, 0deg)) translateY(-6px) scale(1.04); transition-delay: 0s; }
+.stamps .stamp.press { animation: stampPress .45s ease; }
+@keyframes stampPress {
+  0% { transform: rotate(var(--r, 0deg)) translateY(-10px) scale(1.06); }
+  45% { transform: rotate(var(--r, 0deg)) scale(.92); }
+  100% { transform: rotate(var(--r, 0deg)) scale(1); }
+}
 
 /* ---------- About ---------- */
 .about-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: stretch; }
@@ -327,7 +352,7 @@ html[dir="rtl"] .svc:hover .svc-go { transform: translateX(-4px); }
 /* ---------- Military Interpretation Services (the centre's specialty: high on Home, with the interpreter photo) ---------- */
 .military { background: linear-gradient(rgba(11,22,64,.94), rgba(11,22,64,.94)), url("../assets/hero-3.webp") center/cover fixed; color: #d7def4; }
 .military-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-.military-media { position: relative; aspect-ratio: 4 / 3; border-radius: var(--radius); overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,.35); }
+.military-media { position: relative; aspect-ratio: 3 / 2; border-radius: var(--radius); overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,.35); }
 .military-media img { width: 100%; height: 100%; object-fit: cover; }
 .military-media::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 3px rgba(227,200,141,.45); pointer-events: none; }
 .military .eyebrow { color: var(--gold-2); }
@@ -628,6 +653,10 @@ html[dir="rtl"] .reveal.from-end { transform: translateX(-44px); }
   .lang-native { font-size: 28px; }
   .lang-pair { font-size: 14.5px; gap: 6px; }
   .lang-card.more { grid-column: 1 / -1; font-size: 17px; }
+  /* phones: the logo on top, the two stamps side by side under it */
+  .stamps { grid-template-columns: 1fr 1fr; }
+  .stamp:nth-child(2) { grid-column: 1 / -1; grid-row: 1; width: 80%; margin-inline: auto; }
+  .welcome-title { margin-bottom: 32px; }
   .post-body { font-size: 17px; }
   .post-actions { flex-direction: column; align-items: flex-start; }
   .clients-grid { gap: 14px; }
@@ -674,6 +703,8 @@ html[dir="rtl"] .reveal.from-end { transform: translateX(-44px); }
   .hero-slide { transition: opacity .3s; transform: none !important; }
   .hero-content > *, .page-hero .container > *, .hero-nav { animation: none; opacity: 1; }
   .hero-dots button.active::after { animation: none; }
+  .stamps .stamp.reveal, .stamps .stamp.reveal.in, .stamps .stamp.reveal.in:hover { opacity: 1; transform: rotate(var(--r, 0deg)); transition: none; }
+  .stamps .stamp.press { animation: none; }
   .fab::before { animation: none; display: none; }
   .btn::after, .scroll-progress { display: none; }
   .svc:hover .ico, .value:hover .ico, .doc:hover .doc-head .ico, .c-item:hover .ico, .ind-grid .ind:hover, .services-main .svc:hover, .lang-grid .lang-card:hover, .clients-grid .client:hover, .post-grid .post-card:hover,

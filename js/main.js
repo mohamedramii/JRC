@@ -119,7 +119,7 @@
 
   // ---- Animation setup: staggered cards and side-in image/text pairs ----
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  [".services-main", ".docs-grid", ".ind-grid", ".lang-grid", ".clients-grid", ".faq-list", ".vm-grid", ".contact-info"].forEach(function (sel) {
+  [".services-main", ".docs-grid", ".ind-grid", ".lang-grid", ".clients-grid", ".faq-list", ".vm-grid", ".contact-info", ".stamps"].forEach(function (sel) {
     document.querySelectorAll(sel).forEach(function (grid) {
       Array.prototype.forEach.call(grid.children, function (el, i) {
         el.classList.add("reveal");
@@ -174,6 +174,16 @@
     entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); rev.unobserve(en.target); } });
   }, { threshold: .12 });
   document.querySelectorAll(".reveal").forEach(function (el) { rev.observe(el); });
+
+  // ---- Welcome stamps (home): pressing a stamp stamps it again ----
+  document.querySelectorAll(".stamp").forEach(function (stamp) {
+    stamp.addEventListener("click", function () {
+      stamp.classList.remove("press");
+      void stamp.offsetWidth; // restarts the animation on every press
+      stamp.classList.add("press");
+    });
+    stamp.addEventListener("animationend", function () { stamp.classList.remove("press"); });
+  });
 
   // ---- Document category filter (services) ----
   var filterBtns = document.querySelectorAll(".docs-filter button");
