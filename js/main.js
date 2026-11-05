@@ -8,6 +8,8 @@
     html.dir = lang === "ar" ? "rtl" : "ltr";
     var t = html.getAttribute("data-title-" + lang);
     if (t) document.title = t;
+    var d = html.getAttribute("data-desc-" + lang), meta = document.querySelector('meta[name="description"]');
+    if (d && meta) meta.setAttribute("content", d);
     document.querySelectorAll("[data-ph-en]").forEach(function (el) {
       el.placeholder = el.getAttribute("data-ph-" + lang);
     });
@@ -36,6 +38,29 @@
     a.addEventListener("click", function () { nav.classList.remove("open"); menuBtn.setAttribute("aria-expanded", false); });
     a.classList.toggle("active", a.getAttribute("data-page") === html.getAttribute("data-page"));
   });
+  // Services menu: hover and focus open it (CSS); the arrow button opens it on touch screens and in the phone menu
+  var subItems = document.querySelectorAll(".has-sub");
+  var closeSubs = function (except) {
+    subItems.forEach(function (item) {
+      if (item === except) return;
+      item.classList.remove("open");
+      item.querySelector(".sub-toggle").setAttribute("aria-expanded", false);
+    });
+  };
+  subItems.forEach(function (item) {
+    var btn = item.querySelector(".sub-toggle");
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var open = item.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open);
+      closeSubs(item);
+    });
+    item.querySelectorAll(".subnav a").forEach(function (a) {
+      a.classList.toggle("active", location.pathname.split("/").pop() === a.getAttribute("href"));
+    });
+  });
+  document.addEventListener("click", function (e) { if (!e.target.closest(".has-sub")) closeSubs(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeSubs(); });
   window.addEventListener("scroll", function () {
     header.classList.toggle("scrolled", window.scrollY > 10);
     toTop.classList.toggle("show", window.scrollY > 600);
@@ -44,13 +69,12 @@
 
   // ---- Load the later slideshow photos after the page has finished loading ----
   window.addEventListener("load", function () {
-    document.querySelectorAll(".hero-slide[data-bg]").forEach(function (el) {
-      el.style.backgroundImage = "url('" + el.getAttribute("data-bg") + "')";
-    });
+    document.querySelectorAll(".hero-slide.later").forEach(function (el) { el.classList.remove("later"); });
   });
 
-  // ---- Hero slider (home) ----
+  // ---- Hero slider (home); each slide has a caption that links to its service ----
   var slides = document.querySelectorAll(".hero-slide");
+  var captions = document.querySelectorAll(".hero-caption");
   var dotsWrap = document.querySelector(".hero-dots");
   if (slides.length && dotsWrap) {
     var current = 0, timer;
@@ -63,8 +87,10 @@
     var dots = dotsWrap.querySelectorAll("button");
     var go = function (i) {
       slides[current].classList.remove("active"); dots[current].classList.remove("active");
+      if (captions[current]) captions[current].classList.remove("active");
       current = i;
       slides[current].classList.add("active"); dots[current].classList.add("active");
+      if (captions[current]) captions[current].classList.add("active");
     };
     var restart = function () { clearInterval(timer); timer = setInterval(function () { go((current + 1) % slides.length); }, 6000); };
     go(0); restart();
@@ -151,8 +177,7 @@
   var filterBtns = document.querySelectorAll(".docs-filter button");
   filterBtns.forEach(function (btn) {
     btn.addEventListener("click", function () {
-      filterBtns.forEach(function (b) { b.classList.remove("active"); });
-      btn.classList.add("active");
+      filterBtns.forEach(function (b) { b.classList.toggle("active", b === btn); b.setAttribute("aria-pressed", b === btn); });
       var f = btn.getAttribute("data-filter");
       document.querySelectorAll(".doc").forEach(function (d) {
         d.classList.toggle("hide", f !== "all" && d.getAttribute("data-cat") !== f);
