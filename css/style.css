@@ -598,14 +598,19 @@ html[dir="rtl"] .reveal.from-end { transform: translateX(-44px); }
   .topbar-info .hide-sm { display: none; }
   .brand-text small { display: none; }
   .brand-text strong { font-size: 14px; }
-  .hero .container { padding: 100px 0 110px; }
+  /* on phones the text spans the whole picture, so the picture is darkened evenly instead of from one side */
+  .hero::after, html[lang="ar"] .hero::after { background: linear-gradient(0deg, var(--navy) 0, rgba(11,22,64,0) 150px), rgba(11,22,64,.76); }
+  .page-hero::before, html[lang="ar"] .page-hero::before { background: linear-gradient(180deg, rgba(11,22,64,.72) 0%, rgba(11,22,64,.86) 100%); }
+  /* on phones the slide control follows the buttons in the flow, just above the numbers,
+     so a long caption pushes the page down instead of running into the buttons */
+  .hero { flex-direction: column; align-items: stretch; }
+  .hero .container { padding: 76px 0 24px; margin-block: auto; }
+  .hero-nav { position: relative; inset: auto; margin: 0 16px 86px; gap: 10px; padding-inline-start: 12px; }
+  .hero-captions { flex: 1; }
   .hero-dots button { width: 16px; }
   .hero-dots button.active { width: 28px; }
-  /* on phones the slide control sits at the top of the picture, clear of the buttons and the WhatsApp button */
-  .hero-nav { top: 14px; bottom: auto; inset-inline-start: 16px; inset-inline-end: auto; max-width: calc(100% - 32px); gap: 10px; padding-inline-start: 12px; }
   .hero-dots { padding-inline-end: 10px; }
   .hero-caption { font-size: 13.5px; }
-  .stat .num { font-size: 32px; }
   /* phones: the three short numbers share a row, the one with the long label takes the full width under them */
   .stats-grid { grid-template-columns: repeat(3, 1fr); }
   .stat { padding: 18px 8px; }
@@ -636,6 +641,27 @@ html[dir="rtl"] .reveal.from-end { transform: translateX(-44px); }
   .faq-answer { padding: 0 18px 18px; }
   .footer-grid { grid-template-columns: 1fr; }
   .lang-toggle .lt-label { display: none; }
+  .fab { width: 56px; height: 56px; bottom: 16px; inset-inline-end: 16px; }
+  .fab svg { width: 30px; height: 30px; }
+  .to-top { bottom: 84px; inset-inline-end: 23px; }
+}
+
+/* Small phones: the top bar stays on one line and the full name fits the header on two lines */
+@media (max-width: 380px) {
+  .topbar .container { gap: 8px; }
+  .topbar-info .tb-phone { font-size: 15px; }
+  .topbar .socials { gap: 6px; }
+  .topbar .socials a { width: 32px; height: 32px; }
+  .topbar .socials svg { width: 16px; height: 16px; }
+  .header .container { gap: 10px; }
+  .brand { gap: 8px; }
+  .brand img, .header.scrolled .brand img { width: 40px; height: 40px; }
+  .brand-text strong { font-size: 12.5px; }
+  .header-actions { gap: 6px; }
+  .header-phone .icon { width: 34px; height: 34px; padding: 8px; }
+  .lang-toggle { padding: 6px 8px; }
+  /* long English words such as "Confidentiality" do not fit two cards side by side */
+  .values { grid-template-columns: 1fr; }
 }
 
 /* =========================================================================

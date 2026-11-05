@@ -105,6 +105,7 @@
       obs.disconnect();
       document.querySelectorAll("[data-count]").forEach(function (el) {
         var target = +el.getAttribute("data-count"), start = null;
+        if (reduceMotion) { el.textContent = target; return; } // no counting up for visitors who asked for less movement
         function step(t) {
           if (!start) start = t;
           var p = Math.min((t - start) / 1400, 1);
