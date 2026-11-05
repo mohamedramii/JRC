@@ -154,26 +154,36 @@ html[dir="rtl"] .scroll-progress { transform-origin: right; }
 .hero { position: relative; min-height: min(86vh, 760px); display: flex; align-items: center; color: #fff; overflow: hidden; background: var(--navy); }
 .hero-slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transform: scale(1.06); transition: opacity 1.2s ease, transform 7s ease; will-change: transform, background-position; }
 .hero-slide.active { opacity: 1; transform: scale(1); }
-.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(11,22,64,.94) 0%, rgba(11,22,64,.78) 45%, rgba(11,22,64,.35) 100%); }
-html[lang="ar"] .hero::after { background: linear-gradient(270deg, rgba(11,22,64,.94) 0%, rgba(11,22,64,.78) 45%, rgba(11,22,64,.35) 100%); }
-.hero .container { position: relative; z-index: 2; padding: 90px 0 120px; }
+/* Dark side behind the text, and the bottom fades into the navy band under the numbers */
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, var(--navy) 0, rgba(11,22,64,0) 150px), linear-gradient(90deg, rgba(11,22,64,.94) 0%, rgba(11,22,64,.78) 45%, rgba(11,22,64,.35) 100%); }
+html[lang="ar"] .hero::after { background: linear-gradient(0deg, var(--navy) 0, rgba(11,22,64,0) 150px), linear-gradient(270deg, rgba(11,22,64,.94) 0%, rgba(11,22,64,.78) 45%, rgba(11,22,64,.35) 100%); }
+.hero .container { position: relative; z-index: 2; padding: 90px 0 170px; }
 .hero-content { max-width: 700px; }
 .hero .eyebrow { color: var(--gold-2); }
 .hero h1 { color: #fff; font-size: clamp(36px, 6vw, 64px); margin-bottom: 18px; }
 .hero h1 em { font-style: normal; color: var(--red-light); }
+/* Arabic: «مركز نهر الأردن» on one line, «للترجمة المعتمدة» on the next */
+html[lang="ar"] .hero h1 em { display: block; }
 .hero p.lead { font-size: clamp(17px, 2vw, 21px); color: #e1e7f7; margin-bottom: 26px; max-width: 600px; }
 .hero-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 34px; }
 .hero-tags span { border: 1px solid rgba(227,200,141,.5); color: var(--gold-2); padding: 6px 14px; border-radius: 999px; font-size: 15px; background: rgba(201,164,92,.08); }
 .hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; }
-.hero-dots { position: absolute; bottom: 110px; inset-inline-start: max(16px, calc((100% - 1200px) / 2)); z-index: 3; display: flex; gap: 8px; }
-/* What each slide shows, with a link to that service; follows the active slide */
-.hero-captions { position: absolute; bottom: 98px; inset-inline-end: max(16px, calc((100% - 1200px) / 2)); z-index: 3; display: grid; }
-.hero-caption { grid-area: 1 / 1; justify-self: end; display: inline-flex; align-items: center; gap: 12px; padding: 10px 12px 10px 18px; border-radius: 999px; background: rgba(11,22,64,.62); border: 1px solid rgba(255,255,255,.22); backdrop-filter: blur(6px); color: #fff; font-weight: 700; font-size: 15.5px; opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity .6s, transform .6s, visibility .6s, background .2s; }
-html[dir="rtl"] .hero-caption { padding: 10px 18px 10px 12px; }
+/* Slide control at the picture side: a bar per picture (the active one fills while it is shown)
+   and what the picture shows, with a link to that service */
+.hero-nav { position: absolute; bottom: 96px; inset-inline-end: max(16px, calc((100% - 1200px) / 2)); z-index: 3; display: flex; align-items: center; gap: 14px; padding: 7px; padding-inline-start: 16px; border-radius: 999px; background: rgba(11,22,64,.62); border: 1px solid rgba(255,255,255,.22); backdrop-filter: blur(6px); }
+.hero-dots { display: flex; align-items: center; gap: 4px; padding-inline-end: 14px; border-inline-end: 1px solid rgba(255,255,255,.25); }
+.hero-dots button { position: relative; width: 22px; height: 24px; padding: 0; border: 0; background: none; cursor: pointer; transition: width .3s; }
+.hero-dots button::before, .hero-dots button::after { content: ""; position: absolute; inset-inline: 0; top: 10px; height: 4px; border-radius: 4px; }
+.hero-dots button::before { background: rgba(255,255,255,.4); }
+.hero-dots button.active { width: 42px; }
+.hero-dots button.active::after { background: var(--red-light); transform-origin: left; animation: heroProgress 6s linear forwards; }
+html[dir="rtl"] .hero-dots button.active::after { transform-origin: right; }
+.hero-dots button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; border-radius: 4px; }
+.hero-captions { display: grid; }
+.hero-caption { grid-area: 1 / 1; display: inline-flex; align-items: center; justify-content: space-between; gap: 12px; color: #fff; font-weight: 700; font-size: 15.5px; opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity .6s, transform .6s, visibility .6s; }
 .hero-caption.active { opacity: 1; visibility: visible; transform: none; }
-.hero-caption:hover { background: rgba(11,22,64,.85); }
-.hero-caption .hc-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red-light); flex: none; }
-.hero-caption .icon { width: 30px; height: 30px; padding: 7px; border-radius: 50%; background: #fff; color: var(--navy); }
+.hero-caption .icon { width: 32px; height: 32px; padding: 8px; flex: none; border-radius: 50%; background: #fff; color: var(--navy); transition: background .2s, color .2s; }
+.hero-caption:hover .icon { background: var(--red-bright); color: #fff; }
 
 /* Pictures shared by the Home slideshow and the service banners. Each has a mirrored copy for Arabic,
    where the dark gradient sits on the right, and a smaller copy for phones. */
@@ -197,8 +207,6 @@ html[dir="rtl"] .img-visa { background-image: url("../assets/banner-visa-rtl.web
 }
 /* The later slides wait until the page has loaded (main.js removes .later) */
 .hero-slide.later { background-image: none !important; }
-.hero-dots button { width: 10px; height: 10px; border-radius: 99px; border: 0; background: rgba(255,255,255,.4); cursor: pointer; transition: width .3s, background .3s; }
-.hero-dots button.active { width: 30px; background: var(--cyan); }
 
 /* ---------- Inner page banner ---------- */
 .page-hero { position: relative; background-size: cover; background-position: center; color: #fff; padding: 110px 0 90px; will-change: transform, background-position; }
@@ -214,9 +222,11 @@ html[lang="ar"] .page-hero::before { background: linear-gradient(270deg, rgba(11
 .crumbs a:hover { color: var(--cyan); }
 
 /* ---------- Stats (Home) ---------- */
-.stats { position: relative; z-index: 5; margin-top: -70px; }
-.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); background: #fff; border-radius: var(--radius); box-shadow: 0 20px 50px rgba(11,22,64,.14); overflow: hidden; }
-.stat { padding: 30px 24px; text-align: center; border-inline-end: 1px solid var(--line); }
+/* The band under the numbers is navy, so the hero runs straight into the military section with no white strip */
+.stats { position: relative; z-index: 5; margin-top: -70px; background: linear-gradient(transparent 70px, var(--navy) 70px); }
+/* The last number has the longest label, so its column is wider; every cell centres its content so no cell looks empty */
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1.55fr; background: #fff; border-radius: var(--radius); box-shadow: 0 20px 50px rgba(11,22,64,.14); overflow: hidden; }
+.stat { display: flex; flex-direction: column; justify-content: center; padding: 26px 24px; text-align: center; border-inline-end: 1px solid var(--line); }
 .stat:last-child { border-inline-end: 0; }
 .stat .num { font-family: var(--font-head); font-size: 40px; font-weight: 700; color: var(--navy); line-height: 1; }
 .stat .num span { color: var(--cyan); }
@@ -507,6 +517,7 @@ html[dir="rtl"] input[type="tel"] { direction: rtl; text-align: right; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes pulseRing { 0% { transform: scale(1); opacity: .55; } 100% { transform: scale(1.7); opacity: 0; } }
+@keyframes heroProgress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 /* Home hero: text arrives line by line */
 .hero-content > * { opacity: 0; animation: fadeUp .9s cubic-bezier(.2,.7,.2,1) forwards; }
@@ -515,7 +526,7 @@ html[dir="rtl"] input[type="tel"] { direction: rtl; text-align: right; }
 .hero-content > *:nth-child(3) { animation-delay: .5s; }
 .hero-content > *:nth-child(4) { animation-delay: .65s; }
 .hero-content > *:nth-child(5) { animation-delay: .8s; }
-.hero-dots { animation: fadeIn 1s 1s both; }
+.hero-nav { animation: fadeIn 1s 1s both; }
 
 /* Inner page banners: text rises in */
 .page-hero .container > * { opacity: 0; animation: fadeUp .8s cubic-bezier(.2,.7,.2,1) forwards; }
@@ -587,11 +598,24 @@ html[dir="rtl"] .reveal.from-end { transform: translateX(-44px); }
   .topbar-info .hide-sm { display: none; }
   .brand-text small { display: none; }
   .brand-text strong { font-size: 14px; }
-  .hero .container { padding: 76px 0 136px; }
-  /* on phones the caption sits at the top of the picture, clear of the buttons and the WhatsApp button */
-  .hero-captions { inset-inline: 16px; top: 14px; bottom: auto; }
-  .hero-caption { justify-self: start; font-size: 13.5px; }
+  .hero .container { padding: 100px 0 110px; }
+  .hero-dots button { width: 16px; }
+  .hero-dots button.active { width: 28px; }
+  /* on phones the slide control sits at the top of the picture, clear of the buttons and the WhatsApp button */
+  .hero-nav { top: 14px; bottom: auto; inset-inline-start: 16px; inset-inline-end: auto; max-width: calc(100% - 32px); gap: 10px; padding-inline-start: 12px; }
+  .hero-dots { padding-inline-end: 10px; }
+  .hero-caption { font-size: 13.5px; }
   .stat .num { font-size: 32px; }
+  /* phones: the three short numbers share a row, the one with the long label takes the full width under them */
+  .stats-grid { grid-template-columns: repeat(3, 1fr); }
+  .stat { padding: 18px 8px; }
+  .stat .num { font-size: 26px; }
+  .stat .label { font-size: 13.5px; line-height: 1.5; }
+  .stat:nth-child(2) { border-inline-end: 1px solid var(--line); }
+  .stat:nth-child(3) { border-inline-end: 0; }
+  .stat:nth-child(-n+2) { border-bottom: 0; }
+  .stat:nth-child(4) { grid-column: 1 / -1; padding: 18px 20px; border-top: 1px solid var(--line); }
+  .stat:nth-child(4) .label { font-size: 14.5px; }
   .values { grid-template-columns: 1fr 1fr; }
   .docs-grid, .ind-grid, .post-grid { grid-template-columns: 1fr; }
   .lang-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -622,7 +646,8 @@ html[dir="rtl"] .reveal.from-end { transform: translateX(-44px); }
   .reveal, .reveal.from-start, .reveal.from-end, .reveal.zoom, html[dir="rtl"] .reveal.from-start, html[dir="rtl"] .reveal.from-end { opacity: 1; transform: none; transition: none; }
   .values .value.scatter { opacity: 1; transform: none; }
   .hero-slide { transition: opacity .3s; transform: none !important; }
-  .hero-content > *, .page-hero .container > *, .hero-dots { animation: none; opacity: 1; }
+  .hero-content > *, .page-hero .container > *, .hero-nav { animation: none; opacity: 1; }
+  .hero-dots button.active::after { animation: none; }
   .fab::before { animation: none; display: none; }
   .btn::after, .scroll-progress { display: none; }
   .svc:hover .ico, .value:hover .ico, .doc:hover .doc-head .ico, .c-item:hover .ico, .ind-grid .ind:hover, .services-main .svc:hover, .lang-grid .lang-card:hover, .clients-grid .client:hover, .post-grid .post-card:hover,

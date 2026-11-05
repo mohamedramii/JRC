@@ -89,6 +89,7 @@
       slides[current].classList.remove("active"); dots[current].classList.remove("active");
       if (captions[current]) captions[current].classList.remove("active");
       current = i;
+      void dots[current].offsetWidth; // restarts the progress bar even when the same dot is pressed again
       slides[current].classList.add("active"); dots[current].classList.add("active");
       if (captions[current]) captions[current].classList.add("active");
     };
