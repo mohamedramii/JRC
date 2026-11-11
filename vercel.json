@@ -1,0 +1,55 @@
+{
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/",
+      "has": [{ "type": "query", "key": "lang", "value": "ar" }],
+      "destination": "/ar/",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "accept-language", "value": "ar.*" }],
+      "destination": "/ar/",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "destination": "/en/",
+      "permanent": false
+    },
+    {
+      "source": "/index.html",
+      "has": [{ "type": "query", "key": "lang", "value": "ar" }],
+      "destination": "/ar/",
+      "permanent": false
+    },
+    {
+      "source": "/index.html",
+      "destination": "/en/",
+      "permanent": false
+    },
+    {
+      "source": "/:page(about|services|certified-translation-amman|interpretation-services-jordan|visa-immigration-translation|military-interpretation-jordan|languages|faq|blog|contact).html",
+      "has": [{ "type": "query", "key": "lang", "value": "ar" }],
+      "destination": "/ar/:page/",
+      "permanent": true
+    },
+    {
+      "source": "/:page(about|services|certified-translation-amman|interpretation-services-jordan|visa-immigration-translation|military-interpretation-jordan|languages|faq|blog|contact).html",
+      "destination": "/en/:page/",
+      "permanent": true
+    },
+    {
+      "source": "/blog-:post(certified-translation-amman|military-interpreting-jordan|certified-translation-jordan).html",
+      "has": [{ "type": "query", "key": "lang", "value": "ar" }],
+      "destination": "/ar/blog/:post/",
+      "permanent": true
+    },
+    {
+      "source": "/blog-:post(certified-translation-amman|military-interpreting-jordan|certified-translation-jordan).html",
+      "destination": "/en/blog/:post/",
+      "permanent": true
+    }
+  ]
+}

@@ -3,27 +3,9 @@
   var WA_NUMBER = "962776053228";
 
   // ---- Language ----
-  function setLang(lang) {
-    html.lang = lang;
-    html.dir = lang === "ar" ? "rtl" : "ltr";
-    var t = html.getAttribute("data-title-" + lang);
-    if (t) document.title = t;
-    var d = html.getAttribute("data-desc-" + lang), meta = document.querySelector('meta[name="description"]');
-    if (d && meta) meta.setAttribute("content", d);
-    document.querySelectorAll("[data-ph-en]").forEach(function (el) {
-      el.placeholder = el.getAttribute("data-ph-" + lang);
-    });
-    document.querySelectorAll("option[data-en]").forEach(function (el) {
-      el.textContent = el.getAttribute("data-" + lang);
-    });
-    try { localStorage.setItem("jrc-lang", lang); } catch (e) {}
-  }
-  var initial = new URLSearchParams(location.search).get("lang");
-  if (!initial) { try { initial = localStorage.getItem("jrc-lang"); } catch (e) {} }
-  setLang(initial === "ar" ? "ar" : "en");
-  document.querySelectorAll(".lang-toggle").forEach(function (btn) {
-    btn.addEventListener("click", function () { setLang(html.lang === "ar" ? "en" : "ar"); });
-  });
+  // Each language has its own address (/en/…, /ar/…) and the language button is a plain link to the same page
+  // in the other language. The visitor's language is remembered so the site root opens in it next time.
+  try { localStorage.setItem("jrc-lang", html.lang); } catch (e) {}
 
   // ---- Header / mobile nav ----
   var header = document.querySelector(".header");
@@ -56,7 +38,7 @@
       closeSubs(item);
     });
     item.querySelectorAll(".subnav a").forEach(function (a) {
-      a.classList.toggle("active", location.pathname.split("/").pop() === a.getAttribute("href"));
+      a.classList.toggle("active", a.pathname === location.pathname);
     });
   });
   document.addEventListener("click", function (e) { if (!e.target.closest(".has-sub")) closeSubs(); });
