@@ -739,3 +739,15 @@ html[dir="rtl"] .reveal.from-end { transform: translateX(-44px); }
 .page-hero.plain::before { display: none; }
 .page-hero.plain .crumbs, .page-hero.plain .crumbs a { color: #fff; }
 .legal { max-width: 860px; }
+
+/* ---------- Round 3 (12 Nov 2026) ---------- */
+/* About block: her question line between the title and the text */
+.about-text h3 { font-size: clamp(19px, 2.2vw, 24px); margin-bottom: 14px; }
+/* "What sets us apart?" has seven cards now: four to a row, and a row that is not full sits in the middle */
+@media (min-width: 641px) {
+  .values { display: flex; flex-wrap: wrap; justify-content: center; }
+  .value { flex: 0 1 calc((100% - 54px) / 4); }
+}
+@media (min-width: 641px) and (max-width: 1080px) { .value { flex-basis: calc((100% - 36px) / 3); } }
+/* phones keep the two columns they had (a row of two always holds its long words); the seventh card sits in the middle */
+@media (min-width: 381px) and (max-width: 640px) { .value:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 9px); } }

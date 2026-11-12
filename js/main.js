@@ -38,7 +38,7 @@
       closeSubs(item);
     });
     item.querySelectorAll(".subnav a").forEach(function (a) {
-      a.classList.toggle("active", a.pathname === location.pathname);
+      a.classList.toggle("active", a.pathname === location.pathname && !a.hash);
     });
   });
   document.addEventListener("click", function (e) { if (!e.target.closest(".has-sub")) closeSubs(); });
