@@ -80,7 +80,7 @@ function rewriteUrls(html, lang) {
 function organisation(lang) {
   return {
     '@context': 'https://schema.org', '@type': 'ProfessionalService',
-    name: NAME.en, alternateName: NAME.ar, url: SITE + pathOf(lang, 'index'), logo: SITE + '/assets/logo.jpg',
+    name: NAME.en, alternateName: NAME.ar, url: SITE + pathOf(lang, 'index'), logo: SITE + '/assets/logo.png',
     telephone: '+962776053228', email: 'info@jrc-translation.com', foundingDate: '2017',
     address: {
       '@type': 'PostalAddress',
@@ -102,7 +102,7 @@ function pageData(body, lang, url, desc) {
       Object.assign(d, { description: desc, url, areaServed: { '@type': 'Country', name: lang === 'ar' ? 'الأردن' : 'Jordan' }, availableLanguage: ['ar', 'en'], provider: org });
     } else {
       swap('headline', 'alternativeHeadline');
-      const publisher = { '@type': 'Organization', name: NAME[lang], logo: { '@type': 'ImageObject', url: SITE + '/assets/logo.jpg' } };
+      const publisher = { '@type': 'Organization', name: NAME[lang], logo: { '@type': 'ImageObject', url: SITE + '/assets/logo.png' } };
       Object.assign(d, { description: desc, inLanguage: lang, mainEntityOfPage: url, author: { '@type': 'Organization', name: NAME[lang] }, publisher });
     }
     out.push(d);
@@ -163,7 +163,7 @@ function render(name, lang) {
     `<link rel="alternate" hreflang="en" href="${SITE + pathOf('en', name)}">`,
     `<link rel="alternate" hreflang="ar" href="${SITE + pathOf('ar', name)}">`,
     `<link rel="alternate" hreflang="x-default" href="${SITE + pathOf('en', name)}">`,
-    '<link rel="icon" href="/assets/logo.jpg">',
+    '<link rel="icon" type="image/svg+xml" href="/assets/logo.svg">',
     '<link rel="preconnect" href="https://fonts.googleapis.com">',
     '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
     '<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">',
@@ -195,7 +195,7 @@ function forwarder(name) {
   <link rel="alternate" hreflang="en" href="${SITE + en}">
   <link rel="alternate" hreflang="ar" href="${SITE + ar}">
   <link rel="alternate" hreflang="x-default" href="${SITE + en}">
-  <link rel="icon" href="/assets/logo.jpg">
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
   <script>(function(){var l=null;try{l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("jrc-lang")}catch(e){}if(l!=="ar"&&l!=="en")l=/^ar\\b/i.test(navigator.language||"")?"ar":"en";location.replace((l==="ar"?"${ar}":"${en}")+location.hash)})();</script>
   <noscript><meta http-equiv="refresh" content="0; url=${en}"></noscript>
 </head>

@@ -76,6 +76,9 @@
       if (captions[current]) captions[current].classList.add("active");
     };
     var restart = function () { clearInterval(timer); timer = setInterval(function () { go((current + 1) % slides.length); }, 6000); };
+    document.querySelectorAll(".hero-arrow").forEach(function (b) {
+      b.addEventListener("click", function () { go((current + (b.classList.contains("prev") ? slides.length - 1 : 1)) % slides.length); restart(); });
+    });
     go(0); restart();
   }
 
