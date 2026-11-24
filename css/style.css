@@ -115,7 +115,7 @@ html[lang="ar"] .flip { transform: scaleX(-1); }
 .socials a:hover { background: #fff; color: var(--burgundy); transform: translateY(-2px); }
 .socials svg { width: 19px; height: 19px; fill: currentColor; }
 /* Top bar buttons: white with the icon in the brand blue; red with a white icon under the pointer */
-.topbar .socials a { background: var(--sky); color: #fff; }
+.topbar .socials a { background: #fff; color: var(--blue); }
 .topbar .socials a:hover { background: var(--brand-red); color: #fff; }
 
 /* ---------- Header (gets slimmer once you scroll: .scrolled is set in main.js) ---------- */
@@ -202,8 +202,8 @@ html[dir="rtl"] .hero-dots button.active::after { transform-origin: right; }
 html[dir="rtl"] .img-interpreters { background-image: url("../assets/hero-interpreters-rtl.webp"); }
 .img-military { background-image: url("../assets/hero-military-team.webp"); }
 html[dir="rtl"] .img-military { background-image: url("../assets/hero-military-team-rtl.webp"); }
-.img-certified { background-image: url("../assets/hero-certified-stamping.webp"); }
-html[dir="rtl"] .img-certified { background-image: url("../assets/hero-certified-stamping-rtl.webp"); }
+.img-certified { background-image: url("../assets/hero-certified-client.webp"); }
+html[dir="rtl"] .img-certified { background-image: url("../assets/hero-certified-client-rtl.webp"); }
 .img-visa { background-image: url("../assets/banner-visa.webp"); }
 html[dir="rtl"] .img-visa { background-image: url("../assets/banner-visa-rtl.webp"); }
 @media (max-width: 900px) {
@@ -211,8 +211,8 @@ html[dir="rtl"] .img-visa { background-image: url("../assets/banner-visa-rtl.web
   html[dir="rtl"] .img-interpreters { background-image: url("../assets/hero-interpreters-rtl-sm.webp"); }
   .img-military { background-image: url("../assets/hero-military-team-sm.webp"); }
   html[dir="rtl"] .img-military { background-image: url("../assets/hero-military-team-rtl-sm.webp"); }
-  .img-certified { background-image: url("../assets/hero-certified-stamping-sm.webp"); }
-  html[dir="rtl"] .img-certified { background-image: url("../assets/hero-certified-stamping-rtl-sm.webp"); }
+  .img-certified { background-image: url("../assets/hero-certified-client-sm.webp"); }
+  html[dir="rtl"] .img-certified { background-image: url("../assets/hero-certified-client-rtl-sm.webp"); }
   .img-visa { background-image: url("../assets/banner-visa-sm.webp"); }
   html[dir="rtl"] .img-visa { background-image: url("../assets/banner-visa-rtl-sm.webp"); }
 }
@@ -781,3 +781,41 @@ html[lang="ar"] .eyebrow-name { color: var(--blue); }
 @media (min-width: 961px) and (max-width: 1080px) { .header .container { width: calc(100% - 24px); gap: 14px; } .nav { gap: 12px; } .nav a { font-size: 14px; } .header-actions { gap: 8px; } }
 /* phones: no room for a fourth round button beside the name; the floating WhatsApp button is on every page there */
 @media (max-width: 640px) { .header-wa { display: none; } }
+
+/* ---------- Round 6 (23 Nov 2026) ---------- */
+/* top-bar social icons in their own colours on white; under the pointer as before */
+.topbar .socials a[aria-label="Facebook"] { color: #1877f2; }
+.topbar .socials a[aria-label="Instagram"] { color: #e4405f; }
+.topbar .socials a[aria-label="LinkedIn"] { color: #0a66c2; }
+.topbar .socials a[aria-label="WhatsApp"] { color: #25d366; }
+.topbar .socials a:hover { background: var(--brand-red); color: #fff; }
+/* the logo keeps its own rounded edges (the page no longer rounds the picture) */
+.brand img { border-radius: 0; }
+/* arrows at the right and left sides of the first screen, where there is room beside the headline */
+.hero-side { display: none; }
+@media (min-width: 1360px) {
+  .hero > .hero-side { display: grid; position: absolute; top: 50%; z-index: 4; width: 50px; height: 50px; margin-top: -25px; background: rgba(11,22,64,.35); border-color: rgba(255,255,255,.55); }
+  .hero > .hero-side.prev { inset-inline-start: 22px; }
+  .hero > .hero-side.next { inset-inline-end: 22px; }
+  .hero > .hero-side .icon { width: 20px; height: 20px; }
+  .hero-nav .hero-arrow { display: none; }
+}
+/* sectors: five above, four below, smaller cards */
+.ind-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+.ind-grid .ind { flex: 0 1 calc((100% - 64px) / 5); padding: 22px 18px; }
+.ind .ico { margin-bottom: 10px; }
+.ind .ico .icon { width: 28px; height: 28px; }
+.ind h4 { font-size: 16px; }
+.ind p { font-size: 14px; }
+.ind .bg-num { font-size: 42px; }
+@media (max-width: 1080px) { .ind-grid .ind { flex-basis: calc((100% - 16px) / 2); } }
+@media (max-width: 640px) { .ind-grid .ind { flex-basis: 100%; } }
+/* language cards: no title, the pair of languages larger and in the middle */
+.lang-grid .lang-card { justify-content: center; }
+.lang-pair { font-size: 22px; }
+@media (max-width: 640px) { .lang-pair { font-size: 18px; } }
+/* small cards: a few lines in a narrow card read better aligned to the start (justified, the words are pulled far
+   apart); sector titles take two lines' room so every card's text starts at the same height */
+.ind p, .c-item p, .post-card-body p, .svc > p, .vm-card p { text-align: start; }
+.ind h4 { min-height: 2.4em; }
+@media (max-width: 640px) { .ind h4 { min-height: 0; } }
