@@ -203,6 +203,7 @@ html[dir="rtl"] .img-interpreters { background-image: url("../assets/hero-interp
 .img-military { background-image: url("../assets/hero-military-team.webp"); }
 html[dir="rtl"] .img-military { background-image: url("../assets/hero-military-team-rtl.webp"); }
 .img-certified { background-image: url("../assets/hero-certified-client.webp"); }
+html[dir="rtl"] .img-certified { background-image: url("../assets/hero-certified-client-ar-v2.webp"); }
 .img-visa { background-image: url("../assets/banner-visa.webp"); }
 html[dir="rtl"] .img-visa { background-image: url("../assets/banner-visa-rtl.webp"); }
 @media (max-width: 900px) {
@@ -211,6 +212,7 @@ html[dir="rtl"] .img-visa { background-image: url("../assets/banner-visa-rtl.web
   .img-military { background-image: url("../assets/hero-military-team-sm.webp"); }
   html[dir="rtl"] .img-military { background-image: url("../assets/hero-military-team-rtl-sm.webp"); }
   .img-certified { background-image: url("../assets/hero-certified-client-sm.webp"); }
+  html[dir="rtl"] .img-certified { background-image: url("../assets/hero-certified-client-ar-v2-sm.webp"); }
   .img-visa { background-image: url("../assets/banner-visa-sm.webp"); }
   html[dir="rtl"] .img-visa { background-image: url("../assets/banner-visa-rtl-sm.webp"); }
 }
@@ -829,10 +831,3 @@ html[lang="ar"] .eyebrow-name { color: var(--blue); }
 .ind p, .c-item p, .post-card-body p, .svc > p, .vm-card p { text-align: start; }
 .ind h4 { min-height: 2.4em; }
 @media (max-width: 640px) { .ind h4 { min-height: 0; } }
-
-/* Arabic hero uses the original photo facing the opposite way; the overlay gradient remains a separate layer. */
-html[dir="rtl"] .img-certified { transform: scaleX(-1) scale(1.06); }
-html[dir="rtl"] .img-certified.active { transform: scaleX(-1); }
-@media (max-width: 640px), (prefers-reduced-motion: reduce) {
-  html[dir="rtl"] .img-certified { transform: scaleX(-1) !important; }
-}
