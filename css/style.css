@@ -791,14 +791,26 @@ html[lang="ar"] .eyebrow-name { color: var(--blue); }
 .topbar .socials a:hover { background: var(--brand-red); color: #fff; }
 /* the logo keeps its own rounded edges (the page no longer rounds the picture) */
 .brand img { border-radius: 0; }
-/* arrows at the right and left sides of the first screen, where there is room beside the headline */
-.hero-side { display: none; }
+/* Slideshow arrows stay on the picture's two sides at every screen width. */
+.hero > .hero-side { display: grid; position: absolute; top: 50%; z-index: 4; width: 44px; height: 44px; margin-top: -22px; background: rgba(11,22,64,.55); border-color: rgba(255,255,255,.65); }
+.hero > .hero-side.prev { inset-inline-start: 12px; }
+.hero > .hero-side.next { inset-inline-end: 12px; }
+.hero > .hero-side .icon { width: 19px; height: 19px; }
+.hero-nav .hero-arrow { display: none; }
+@media (max-width: 1024px) {
+  .hero .hero-ctas { margin-top: 64px; }
+}
 @media (min-width: 1360px) {
-  .hero > .hero-side { display: grid; position: absolute; top: 50%; z-index: 4; width: 50px; height: 50px; margin-top: -25px; background: rgba(11,22,64,.35); border-color: rgba(255,255,255,.55); }
+  .hero > .hero-side { width: 50px; height: 50px; margin-top: -25px; background: rgba(11,22,64,.35); border-color: rgba(255,255,255,.55); }
   .hero > .hero-side.prev { inset-inline-start: 22px; }
   .hero > .hero-side.next { inset-inline-end: 22px; }
   .hero > .hero-side .icon { width: 20px; height: 20px; }
-  .hero-nav .hero-arrow { display: none; }
+}
+@media (max-width: 640px) {
+  .hero .hero-ctas { margin-top: 76px; }
+  .hero > .hero-side { width: 38px; height: 38px; margin-top: -19px; }
+  .hero > .hero-side.prev { inset-inline-start: 6px; }
+  .hero > .hero-side.next { inset-inline-end: 6px; }
 }
 /* sectors: five above, four below, smaller cards */
 .ind-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
